@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import DesktopNavbar from './DesktopNavbar';
+import MobileNavbar from './MobileNavbar';
 
 export default function Navbar() {
   return (
@@ -14,9 +15,9 @@ export default function Navbar() {
               Feedlyx
             </Link>
           </div>
-          {/* Desktop Navbar */}
+          {/* Desktop & Mobile Navbar*/}
           <DesktopNavbar />
-          {/* Mobile Navbar */}
+          <MobileNavbar />
         </div>
       </div>
     </nav>
