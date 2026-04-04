@@ -58,7 +58,6 @@ Built with a production-ready stack using Next.js App Router, Prisma, PostgreSQL
 <img width="245" height="495" alt="postncomment" src="https://github.com/user-attachments/assets/7c1fc071-c5e0-46f5-901f-b6f0a0705ebd" />
 <img width="245" height="495" alt="profile" src="https://github.com/user-attachments/assets/03e6564c-71d2-4418-92c9-61ba5327acc5" />
 <img width="245" height="495" alt="notification" src="https://github.com/user-attachments/assets/01b52337-14cb-439d-88b3-125d8352218e" />
-<img width="245" height="495" alt="mobilehome" src="https://github.com/user-attachments/assets/77ad7a38-8fa4-4411-aa4e-8c308020727f" />
 
 
 ## ⚙️ Getting Started
