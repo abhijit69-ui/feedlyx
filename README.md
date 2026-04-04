@@ -67,13 +67,24 @@ Built with a production-ready stack using Next.js App Router, Prisma, PostgreSQL
 ```bash
 git clone https://github.com/abhijit69-ui/feedlyx.git
 cd feedlyx
+```
+### 2. Install dependencies
+```bash
 npm install
-
+```
+### 3. Setup environment variables
+```bash
+// Create a .env file:
 DATABASE_URL=your_database_url
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_key
 CLERK_SECRET_KEY=your_secret
-
+```
+### 4. Setup database
+```bash
 npx prisma generate
 npx prisma migrate dev
+```
+### 5. Run the app
+```bash
 npm run dev
 ```
