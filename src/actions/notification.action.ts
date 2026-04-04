@@ -1,6 +1,7 @@
 'use server';
 import { prisma } from '@/lib/prisma';
 import { getDbUserId } from './user.action';
+import { revalidatePath } from 'next/cache';
 
 export async function getNotifications() {
   try {
@@ -60,9 +61,30 @@ export async function markNotificationsAsRead(notificationIds: string[]) {
       },
     });
 
+    revalidatePath('/');
+
     return { success: true };
   } catch (error) {
     console.error('Error marking notifications as read:', error);
     return { success: false };
+  }
+}
+
+export async function getUnreadNotificationCount() {
+  try {
+    const userId = await getDbUserId();
+    if (!userId) return 0;
+
+    const count = await prisma.notification.count({
+      where: {
+        userId,
+        read: false,
+      },
+    });
+
+    return count;
+  } catch (error) {
+    console.error('Error fetching unread count:', error);
+    return 0;
   }
 }

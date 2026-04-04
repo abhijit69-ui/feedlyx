@@ -1,7 +1,7 @@
 'use client';
 import { SignInButton, SignOutButton, useAuth, useUser } from '@clerk/nextjs';
 import { useTheme } from 'next-themes';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from './ui/button';
 import {
   BellIcon,
@@ -24,8 +24,24 @@ import Link from 'next/link';
 export default function MobileNavbar() {
   const { user } = useUser();
   const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const [count, setCount] = useState(0);
   const { isSignedIn } = useAuth();
   const { theme, setTheme } = useTheme();
+
+  useEffect(() => {
+    const fetchCount = async () => {
+      const res = await fetch('/api/notifications/unread-count');
+      const data = await res.json();
+      setCount(data.count);
+    };
+
+    fetchCount();
+
+    // 🔥 optional polling
+    const interval = setInterval(fetchCount, 5000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className='flex md:hidden items-center space-x-2'>
@@ -68,9 +84,21 @@ export default function MobileNavbar() {
                   variant='ghost'
                   className='flex items-center gap-3 justify-start'
                   asChild
+                  onClick={() => setCount(0)}
                 >
-                  <Link href='/notifications'>
-                    <BellIcon className='w-4 h-4' />
+                  <Link
+                    href='/notifications'
+                    className='flex items-center gap-3'
+                  >
+                    <div className='relative'>
+                      <BellIcon className='w-4 h-4' />
+
+                      {count > 0 && (
+                        <span className='absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-1.5'>
+                          {count > 9 ? '9+' : count}
+                        </span>
+                      )}
+                    </div>
                     Notifications
                   </Link>
                 </Button>
