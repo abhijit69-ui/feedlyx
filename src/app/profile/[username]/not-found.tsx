@@ -1,12 +1,13 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
 import { HomeIcon, ArrowLeftIcon } from 'lucide-react';
 
 export default function NotFound() {
   return (
     <div className='min-h-[80vh] grid place-items-center px-4'>
-      <div className='w-full max-w-md'>
-        <div className='pt-6'>
+      <Card className='w-full max-w-md'>
+        <CardContent className='pt-6'>
           <div className='text-center space-y-6'>
             {/* LARGE 404 TEXT */}
             <p className='text-8xl font-bold text-primary font-mono'>404</p>
@@ -14,10 +15,10 @@ export default function NotFound() {
             {/* MESSAGE */}
             <div className='space-y-2'>
               <h1 className='text-2xl font-bold tracking-tight'>
-                Page not found
+                User not found
               </h1>
               <p className='text-muted-foreground'>
-                The page you're looking for doesn't exist.
+                The user you're looking for doesn't exist.
               </p>
             </div>
 
@@ -31,8 +32,8 @@ export default function NotFound() {
               </Button>
             </div>
           </div>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }
