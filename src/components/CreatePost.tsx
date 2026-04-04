@@ -26,7 +26,7 @@ export default function CreatePost() {
       const result = await createPost(content, imageUrl);
 
       //   reset form if success
-      if (result.success) {
+      if (result?.success) {
         setContent('');
         setImageUrl('');
         setShowImageUpload(false);
