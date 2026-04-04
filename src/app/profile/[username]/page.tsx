@@ -1,10 +1,50 @@
-import React from 'react';
+import {
+  getProfileByUsername,
+  getUserLikedPosts,
+  getUserPosts,
+  isFollowing,
+} from '@/actions/profile.action';
+import { notFound } from 'next/navigation';
+import ProfilePageClient from './ProfilePageClient';
 
-export default function ProfilePage({
+export async function generateMetadata({
   params,
 }: {
-  params: { username: string };
+  params: Promise<{ username: string }>;
 }) {
-  console.log('params:', params);
-  return <div>ProfilePage</div>;
+  const { username } = await params;
+  const user = await getProfileByUsername(username);
+  if (!user) return;
+
+  return {
+    title: `${user.name ?? user.username}`,
+    description: user.bio || `Check out ${user.username}'s profile`,
+  };
+}
+
+export default async function ProfilePage({
+  params,
+}: {
+  params: Promise<{ username: string }>;
+}) {
+  const { username } = await params;
+
+  const user = await getProfileByUsername(username);
+
+  if (!user) notFound();
+
+  const [posts, likedPosts, isCurrentUserFollowing] = await Promise.all([
+    getUserPosts(user.id),
+    getUserLikedPosts(user.id),
+    isFollowing(user.id),
+  ]);
+
+  return (
+    <ProfilePageClient
+      user={user}
+      posts={posts}
+      likedPosts={likedPosts}
+      isFollowing={isCurrentUserFollowing}
+    />
+  );
 }

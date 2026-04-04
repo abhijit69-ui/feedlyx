@@ -1,5 +1,5 @@
 'use client';
-import { SignInButton, SignOutButton, useAuth } from '@clerk/nextjs';
+import { SignInButton, SignOutButton, useAuth, useUser } from '@clerk/nextjs';
 import { useTheme } from 'next-themes';
 import { useState } from 'react';
 import { Button } from './ui/button';
@@ -22,6 +22,7 @@ import {
 import Link from 'next/link';
 
 export default function MobileNavbar() {
+  const { user } = useUser();
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const { isSignedIn } = useAuth();
   const { theme, setTheme } = useTheme();
@@ -78,7 +79,9 @@ export default function MobileNavbar() {
                   className='flex items-center gap-3 justify-start'
                   asChild
                 >
-                  <Link href='/profile'>
+                  <Link
+                    href={`/profile/${user?.username ?? user?.emailAddresses[0].emailAddress.split('@')[0]}`}
+                  >
                     <UserIcon className='w-4 h-4' />
                     Profile
                   </Link>
